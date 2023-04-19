@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-
 public enum LookDirectionEnum
 {
     up,
@@ -20,9 +19,11 @@ public class PlayerControler : MonoBehaviour
 
     [Header("MovementSettings")]
     [SerializeField] float _Speed;
+    Vector3 _Movement;
 
     [Header("AttackSettings")]
-    [SerializeField] float _AttackSpeed;
+    [SerializeField] float _AttackSpeed;  
+    Vector3 _AttackRotation;
     bool _IsAttacking;
 
     [Header("DashSettings")]
@@ -35,10 +36,8 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] Transform _PlayerSprite;
     float _Timer;
 
-    Vector3 _Movement;
-
     void Update()
-    {
+    {        
         if (!_IsAttacking)
         {
             Movement();
@@ -47,6 +46,7 @@ public class PlayerControler : MonoBehaviour
             StartCoroutine(Atack());
         }
         LookDirection();
+        AttackDirections();
     }
 
     void Movement()
@@ -58,25 +58,23 @@ public class PlayerControler : MonoBehaviour
     IEnumerator Atack()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {         
-            _Animator.SetBool("Attack", true);
-            _IsAttacking = true;
-            yield return new WaitForSeconds(1);
-            _IsAttacking = false;
-            _Animator.SetBool("Attack", false);
+        {            
+            StartCoroutine(AttackAnimations());
+            yield return new WaitForSeconds(_AttackSpeed);
         }
     }
+
     IEnumerator Dash()
     {
-        Vector3 storedvelocity;
+        Vector3 storedvelocity;//The velocity the player is moving at before the dash
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             _IsDashing = true;
-            storedvelocity = _RB.velocity;
+            storedvelocity = _RB.velocity;//Stores the velocity the player is moving at
             _RB.velocity = _Movement.normalized * _Dashspeed;
-            yield return new WaitForSeconds(0.15f);
-            _RB.velocity = storedvelocity;
-            _IsDashing = false;
+            yield return new WaitForSeconds(_DashDuration);
+            _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
+            _IsDashing = false;   
         }
     }
     void WalkAnimations()
@@ -102,27 +100,26 @@ public class PlayerControler : MonoBehaviour
                 break;
 
             case LookDirectionEnum.right:
+                _PlayerSprite.localEulerAngles = new Vector3(0, 0, 0);
                 _Animator.speed = 1;
                 _Animator.SetBool("Right", true);
                 _Animator.SetBool("Up", false);
                 _Animator.SetBool("Down", false);
                 _Animator.SetBool("Idle", false);
                 _Timer = 0;
-                _PlayerSprite.rotation = new Quaternion(0, 0, 0, 0);
                 break;
 
             case LookDirectionEnum.left:
+                _PlayerSprite.localEulerAngles = new Vector3(0, 180, 0);
                 _Animator.speed = 1;
                 _Animator.SetBool("Right", true);
                 _Animator.SetBool("Up", false);
                 _Animator.SetBool("Down", false);
                 _Animator.SetBool("Idle", false);
                 _Timer = 0;
-                _PlayerSprite.rotation = new Quaternion(0, 180, 0, 0);
                 break;
 
             case LookDirectionEnum.idle:
-
                 float switchToIdleTime = 0.25f;
                 _Timer += Time.deltaTime;
                 if (_Timer > switchToIdleTime)
@@ -137,39 +134,69 @@ public class PlayerControler : MonoBehaviour
 
         }
     }
+
+    IEnumerator AttackAnimations()
+    {
+        _Animator.speed = _AttackSpeed;
+        _IsAttacking = true;
+        _Animator.SetBool("Attack", true);
+        yield return new WaitForSeconds(_AttackSpeed);
+        _Animator.SetBool("Attack", false);
+        _IsAttacking = false;
+    }
+
     void LookDirection()
     {
-        if (_Movement.z > 0)
-        {
+        if (_Movement.z > 0){
             _LookDirection = LookDirectionEnum.up;
         }
-
-        else if (_Movement.z < 0)
-        {
+        else if (_Movement.z < 0){
             _LookDirection = LookDirectionEnum.down;
         }
-
-        else if (_Movement.x < 0)
-        {
+        else if (_Movement.x < 0){
             _LookDirection = LookDirectionEnum.left;
         }
-
-        else if (_Movement.x > 0)
-        {
+        else if (_Movement.x > 0){
             _LookDirection = LookDirectionEnum.right;
         }
-        else
-        {
+        else{
             _LookDirection = LookDirectionEnum.idle;
         }
 
     }
+    void AttackDirections()
+    {
+        switch (_LookDirection)
+        {
+            case LookDirectionEnum.up:
+                _AttackRotation = new Vector3(0, 0, 90);
+                break;
+            case LookDirectionEnum.down:
+                _AttackRotation = new Vector3(0, 0, -90);
+                break;
+            case LookDirectionEnum.left:
+                _AttackRotation = new Vector3(-90, -0, 0);
+                break;
+            case LookDirectionEnum.right:
+                _AttackRotation = new Vector3(90, 0, 0);
+                break;
+            case LookDirectionEnum.idle:
+                _AttackRotation = new Vector3(0, 0, -90);
+                break;
+        }
+    }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(transform.position, _AttackRotation);
+        print("WaAaAaAaAaA");
+    }
     private void FixedUpdate()
     {
         if (!_IsAttacking)
         {
-            _RB.MovePosition(_RB.position + _Movement.normalized * Time.fixedDeltaTime * _Speed);
+            _RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);
         }
     }
 }
