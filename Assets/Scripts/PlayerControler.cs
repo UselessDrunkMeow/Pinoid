@@ -22,7 +22,7 @@ public class PlayerControler : MonoBehaviour
     Vector3 _Movement;
 
     [Header("AttackSettings")]
-    [SerializeField] float _AttackSpeed;  
+    [SerializeField] float _AttackSpeed;
     Vector3 _AttackRotation;
     bool _IsAttacking;
 
@@ -37,14 +37,14 @@ public class PlayerControler : MonoBehaviour
     float _Timer;
 
     void Update()
-    {        
+    {
         if (!_IsAttacking)
         {
-            Movement();
             StartCoroutine(Dash());
-            WalkAnimations();
             StartCoroutine(Atack());
         }
+        Movement();
+        WalkAnimations();
         LookDirection();
         AttackDirections();
     }
@@ -58,7 +58,7 @@ public class PlayerControler : MonoBehaviour
     IEnumerator Atack()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {            
+        {
             StartCoroutine(AttackAnimations());
             yield return new WaitForSeconds(_AttackSpeed);
         }
@@ -74,7 +74,7 @@ public class PlayerControler : MonoBehaviour
             _RB.velocity = _Movement.normalized * _Dashspeed;
             yield return new WaitForSeconds(_DashDuration);
             _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
-            _IsDashing = false;   
+            _IsDashing = false;
         }
     }
     void WalkAnimations()
@@ -133,7 +133,7 @@ public class PlayerControler : MonoBehaviour
                 break;
 
         }
-    }
+    }//dont look at this, its shit, but it kinda works?
 
     IEnumerator AttackAnimations()
     {
@@ -147,19 +147,24 @@ public class PlayerControler : MonoBehaviour
 
     void LookDirection()
     {
-        if (_Movement.z > 0){
+        if (_Movement.z > 0)
+        {
             _LookDirection = LookDirectionEnum.up;
         }
-        else if (_Movement.z < 0){
+        else if (_Movement.z < 0)
+        {
             _LookDirection = LookDirectionEnum.down;
         }
-        else if (_Movement.x < 0){
+        else if (_Movement.x < 0)
+        {
             _LookDirection = LookDirectionEnum.left;
         }
-        else if (_Movement.x > 0){
+        else if (_Movement.x > 0)
+        {
             _LookDirection = LookDirectionEnum.right;
         }
-        else{
+        else
+        {
             _LookDirection = LookDirectionEnum.idle;
         }
 
@@ -186,7 +191,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmos()//gizmos
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawRay(transform.position, _AttackRotation);
@@ -194,9 +199,6 @@ public class PlayerControler : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!_IsAttacking)
-        {
-            _RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);
-        }
+        _RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);
     }
 }
