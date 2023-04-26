@@ -496,8 +496,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985558930}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.5819998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.152}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -887,7 +887,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4026368582025450753, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
   m_PrefabInstance: {fileID: 4026368583391226159}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1891147839
+--- !u!114 &1891147845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -899,13 +899,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a41625471a54694d8fb5965e7c002b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _RotationAmount: 0
+  _AttackDuration: 0.35
+  _AttackCooldown: 1
+  _NewRotation: 45
   _RotationSpeed: 0
-  _ForwardMoveAmount: 0
-  _ForwardMoveSpeed: 0
+  _Flip: 0
+  _ForwardMoveAmount: 2
+  _ForwardMSpeed: 0
   _SideMoveAmount: 0
   _SideMoveSpeed: 0
+  _IsAttacking: 0
+  _NewRot: {x: 0, y: 0, z: 0}
+  _NewRot2: {x: 0, y: 0, z: 0, w: 0}
+  _CurRot: {x: 0, y: 0, z: 0}
+  killmethisisstupid: 
   WeaponRotatePoint: {fileID: 849171676}
+  WeaponHolder: {fileID: 985558931}
 --- !u!1001 &1948591666
 PrefabInstance:
   m_ObjectHideFlags: 0
