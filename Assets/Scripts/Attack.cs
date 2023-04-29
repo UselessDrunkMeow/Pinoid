@@ -27,7 +27,8 @@ public class Attack : MonoBehaviour
     public bool _IsAttacking;
 
     public float _ForwardTime;
-    float _SwingTime;
+    public float _SwingTime;
+    public float _CooldownTime;
 
     Vector3 _NewPos;
     Vector3 _OldPos;
@@ -65,7 +66,10 @@ public class Attack : MonoBehaviour
         else
         {
             WeaponHolder.SetActive(false);
+            _SwingTime = 0;
+            _ForwardTime = 0;
         }
+
 
         _NewPos.z = -_ForwardMoveAmount;
         WeaponRotatePoint.eulerAngles = _AttackRotation;
@@ -126,19 +130,17 @@ public class Attack : MonoBehaviour
         else if (returnToStartPos)
         {
             WeaponHolder.transform.localPosition = Vector3.MoveTowards(WeaponHolder.transform.localPosition, _OldPos, _ForwardMSpeed * Time.deltaTime);
-            if (_ForwardTime >= _AttackDuration / 2)
+            if (_ForwardTime >= _AttackDuration / 2 + _AttackCooldown)
             {
-                print("Done!");
                 returnToStartPos = false;
+                _ForwardTime = 0;
                 _CanAttack = true;
                 _IsAttacking = false;
-                _ForwardTime = 0;
             }
         }
     }
     void SwingMovement()
     {
-        print("!");
         WeaponHolder.transform.localEulerAngles = new Vector3(0, _NewRot.y, 0);
         if (_NewRot.y < _NewRotation && !_Flip)
         {
@@ -150,19 +152,16 @@ public class Attack : MonoBehaviour
             _NewRot.y -= _RotationSpeed;
         }
 
-        if (_SwingTime >= _AttackCooldown)
+        if (_SwingTime >= _AttackDuration + _AttackCooldown)
         {
-            print("Flip!");
             _Flip = !_Flip;
             _SwingTime = 0;
         }
     }
 
-
     void SideMovement()
     {
 
     }
-
-
+  
 }

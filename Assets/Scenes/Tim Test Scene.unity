@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
+    agentRadius: 0.25
+    agentHeight: 1
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.083333336
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -546,6 +546,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Agent: {fileID: 486833142}
   _target: {fileID: 1388616556}
+  _MinRange: 0.5
+  _EnemyState: 0
+  _MinRadius: 3
+  _MaxRadius: 6
+  _WaitTime: 1
+  _MaxTotalTime: 5
+  WanderingWaitTimer: 0
+  WanderingTimer: 0
 --- !u!195 &486833142
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -556,7 +564,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1006,7 +1014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388616555}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.016344775, y: 0.98274136, z: -1.1266637}
+  m_LocalPosition: {x: -3.81, y: 0.06, z: 2.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1217,11 +1225,19 @@ PrefabInstance:
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 1891147845, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
+      propertyPath: _ForwardMSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891147845, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
       propertyPath: _RotationSpeed
-      value: 50
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1891147845, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
       propertyPath: _AttackDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1891147845, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
+      propertyPath: _ForwardMoveAmount
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4026368582025450752, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
