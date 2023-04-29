@@ -70,7 +70,6 @@ public class Attack : MonoBehaviour
             _ForwardTime = 0;
         }
 
-
         _NewPos.z = -_ForwardMoveAmount;
         WeaponRotatePoint.eulerAngles = _AttackRotation;
     }

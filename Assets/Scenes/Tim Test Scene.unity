@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251380019129064837, guid: dc668074dba22e24788c994978e57e5e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.11
+      value: -9.289999
       objectReference: {fileID: 0}
     - target: {fileID: 2251380019129064837, guid: dc668074dba22e24788c994978e57e5e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 486833143}
   - component: {fileID: 486833142}
   - component: {fileID: 486833141}
+  - component: {fileID: 486833144}
   m_Layer: 0
   m_Name: Enemy Base
   m_TagString: Untagged
@@ -592,6 +593,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &486833144
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486833140}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.1150675
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.1383972, z: 0}
 --- !u!1 &731741015
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251380019129064837, guid: dc668074dba22e24788c994978e57e5e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.6
+      value: -9.78
       objectReference: {fileID: 0}
     - target: {fileID: 2251380019129064837, guid: dc668074dba22e24788c994978e57e5e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -889,10 +904,6 @@ PrefabInstance:
     - target: {fileID: 5465553368904177298, guid: b909a47af88a44f46bc9a01e34313a02, type: 3}
       propertyPath: m_Name
       value: FloorE_P
-      objectReference: {fileID: 0}
-    - target: {fileID: 5465553368904177298, guid: b909a47af88a44f46bc9a01e34313a02, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b909a47af88a44f46bc9a01e34313a02, type: 3}
@@ -1169,7 +1180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251380019129064837, guid: dc668074dba22e24788c994978e57e5e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.2
+      value: 11.02
       objectReference: {fileID: 0}
     - target: {fileID: 2251380019129064837, guid: dc668074dba22e24788c994978e57e5e, type: 3}
       propertyPath: m_LocalPosition.y

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public enum EnemyState
 {
@@ -22,6 +23,11 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] EnemyState _EnemyState;
     PlayerControler _Player;
 
+    [Header("AgentMoveSpeeds")]
+    [SerializeField] float _WanderSpeed;
+    [SerializeField] float _ChaseSpeed;
+    [SerializeField] float _AttackSpeed;
+
     [Header("WanderingSettings")]
     [SerializeField] float _MinRadius;
     [SerializeField] float _MaxRadius;
@@ -29,10 +35,15 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] float _MaxTotalTime;
     Vector3 _WanderPoint;
 
+    [Header("Attacking conditions")]
+    [SerializeField] float _MaxDistance;
+
     [Header("Timers")]
     [SerializeField] float WanderingWaitTimer;
     [SerializeField] float WanderingTimer;
 
+    [Header("Events")]
+    UnityEvent _Attack;
 
     private void OnEnable()
     {
@@ -41,6 +52,19 @@ public class EnemyBrain : MonoBehaviour
     void Update()
     {
         _Agent.SetDestination(_target.position);
+        States();
+        if (Vector3.Distance(transform.position, _Player.transform.position) < _MaxDistance)
+        {
+            _EnemyState = EnemyState.Attacking;
+        }
+        else if(_EnemyState == EnemyState.Attacking && Vector3.Distance(transform.position, _Player.transform.position) > _MaxDistance)
+        {
+            _EnemyState = EnemyState.Chasing;
+        }
+    }
+
+    void States()
+    {
         switch (_EnemyState)
         {
             case EnemyState.Idle:
@@ -52,11 +76,11 @@ public class EnemyBrain : MonoBehaviour
             case EnemyState.Chasing:
                 Chasing();
                 break;
-            case EnemyState.Fleeing:
-                Fleeing();
-                break;
             case EnemyState.Attacking:
                 Attacking();
+                break;
+            case EnemyState.Fleeing:
+                Fleeing();
                 break;
         }
     }
@@ -66,6 +90,7 @@ public class EnemyBrain : MonoBehaviour
     }
     void Wandering()
     {
+        _Agent.speed = _WanderSpeed;
         WanderingTimer += Time.deltaTime;
         if (Vector3.Distance(_Agent.transform.position, _target.transform.position) < _MinRange)
         {
@@ -79,7 +104,7 @@ public class EnemyBrain : MonoBehaviour
                 WanderingTimer = 0;
             }
         }
-        else if(WanderingTimer > _MaxTotalTime)
+        else if (WanderingTimer > _MaxTotalTime)
         {
             _target.transform.position = transform.position;
             WanderingTimer = 0;
@@ -87,15 +112,17 @@ public class EnemyBrain : MonoBehaviour
     }
     void Chasing()
     {
+        _Agent.speed = _ChaseSpeed;
         _target.position = _Player.transform.position;
-    }
-    void Fleeing()
-    {
-
     }
     void Attacking()
     {
-
+        _Agent.speed = _AttackSpeed;
+        print("ATTACK!");
+    }
+    void Fleeing()
+    {
+        _Attack.Invoke();
     }
 
     void RandomPointGenerator()
