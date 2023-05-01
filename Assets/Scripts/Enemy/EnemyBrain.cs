@@ -53,14 +53,8 @@ public class EnemyBrain : MonoBehaviour
     {
         _Agent.SetDestination(_target.position);
         States();
-        if (Vector3.Distance(transform.position, _Player.transform.position) < _MaxDistance)
-        {
-            _EnemyState = EnemyState.Attacking;
-        }
-        else if(_EnemyState == EnemyState.Attacking && Vector3.Distance(transform.position, _Player.transform.position) > _MaxDistance)
-        {
-            _EnemyState = EnemyState.Chasing;
-        }
+        PlayerDistanceChecker();
+        LineOfSight();
     }
 
     void States()
@@ -93,8 +87,7 @@ public class EnemyBrain : MonoBehaviour
         _Agent.speed = _WanderSpeed;
         WanderingTimer += Time.deltaTime;
         if (Vector3.Distance(_Agent.transform.position, _target.transform.position) < _MinRange)
-        {
-            print("wawa");
+        {            
             WanderingWaitTimer += Time.deltaTime;
             if (WanderingWaitTimer > _WaitTime)
             {
@@ -117,12 +110,31 @@ public class EnemyBrain : MonoBehaviour
     }
     void Attacking()
     {
-        _Agent.speed = _AttackSpeed;
-        print("ATTACK!");
+        _Agent.speed = _AttackSpeed;   
     }
     void Fleeing()
     {
         _Attack.Invoke();
+    }
+
+    void PlayerDistanceChecker()
+    {
+        if (Vector3.Distance(transform.position, _Player.transform.position) < _MaxDistance)
+        {
+            _EnemyState = EnemyState.Attacking;
+        }
+        else if (_EnemyState == EnemyState.Attacking && Vector3.Distance(transform.position, _Player.transform.position) > _MaxDistance)
+        {
+            _EnemyState = EnemyState.Chasing;
+        }
+    }
+
+    void LineOfSight()
+    {
+        if(_EnemyState == EnemyState.Wandering)
+        {
+
+        }
     }
 
     void RandomPointGenerator()

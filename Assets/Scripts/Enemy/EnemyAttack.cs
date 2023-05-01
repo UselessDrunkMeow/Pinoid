@@ -4,9 +4,10 @@ using UnityEngine;
 
 public enum AttackVariants
 {
-
+    Melee,
+    Ranged,
+    Other,
 }
-
 
 public class EnemyAttack : MonoBehaviour
 {
