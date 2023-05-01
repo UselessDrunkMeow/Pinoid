@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6149298210768420043}
   - component: {fileID: 7131847694532014958}
   - component: {fileID: 4980311554199390116}
+  - component: {fileID: 4670050520004033796}
   m_Layer: 0
   m_Name: FG_40_16_P
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4670050520004033796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6781684954246653553}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0, y: -0.0048596, z: 0}
