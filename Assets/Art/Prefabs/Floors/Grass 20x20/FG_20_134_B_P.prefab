@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 592891882130158665}
   - component: {fileID: 4581774439420247020}
   - component: {fileID: 1761273429078265638}
+  - component: {fileID: -4950082176574193840}
   m_Layer: 0
   m_Name: FG_20_134_B_P
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-4950082176574193840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248173698977427187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 20, y: 0.79999995, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}

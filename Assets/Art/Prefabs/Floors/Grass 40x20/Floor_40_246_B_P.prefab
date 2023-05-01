@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 685406779267203182}
   - component: {fileID: 4480191303230083019}
   - component: {fileID: 1857771169781005057}
+  - component: {fileID: -4415015296002654709}
   m_Layer: 0
   m_Name: Floor_40_246_B_P
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-4415015296002654709
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200653695420832468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 40, y: 0.79999995, z: 20}
+  m_Center: {x: 0, y: 0, z: 0}
