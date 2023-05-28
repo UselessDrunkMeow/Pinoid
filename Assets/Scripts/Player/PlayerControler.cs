@@ -46,6 +46,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] Transform _PlayerSprite;
     float _Timer;
 
+    [Header("Refrenceses")]
     Attack _Attack;
 
     private void Start()
@@ -80,7 +81,7 @@ public class PlayerControler : MonoBehaviour
             _IsDashing = false;
         }
     }
-    //dont look at this, its shit, but it kinda works?
+    //dont look at this, its shit, but it kinda works? i really need to learn how the unity animator works
     void WalkAnimations()
     {
         switch (_MoveDirection)
@@ -139,16 +140,19 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    IEnumerator AttackAnimations()
-    {
-        _Animator.speed = _AttackSpeed;
-        _IsAttacking = true;
-        _Animator.SetBool("Attack", true);
-        yield return new WaitForSeconds(_AttackSpeed);
-        _Animator.SetBool("Attack", false);
-        _IsAttacking = false;
-    }
+    //not used for now, might need it later, so il keep it
 
+    //IEnumerator AttackAnimations()
+    //{
+    //    _Animator.speed = _AttackSpeed;
+    //    _IsAttacking = true;
+    //    _Animator.SetBool("Attack", true);
+    //    yield return new WaitForSeconds(_AttackSpeed);
+    //    _Animator.SetBool("Attack", false);
+    //    _IsAttacking = false;
+    //}
+
+    //checks input to see to what direction the player has to move, also changes the movedirection enum to the correct enum
     void MoveDirection()
     {
         _Movement.x = Input.GetAxisRaw("Horizontal");
@@ -176,6 +180,7 @@ public class PlayerControler : MonoBehaviour
 
     }
 
+    //checks input to see to what direction the player has to look, also changes the lookirection enum to the correct enum
     void LookDirection()
     {
         _Look.x = Input.GetAxisRaw("HorizontalArrow");
@@ -202,6 +207,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
+    //fixed update for moving
     private void FixedUpdate()
     {
         _RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);
