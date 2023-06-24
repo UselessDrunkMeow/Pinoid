@@ -29,9 +29,10 @@ public class EnemyBrain : MonoBehaviour
 
     [Header("GeneralAgentSettings")]
     [SerializeField] float _MinRange;
-    [SerializeField] EnemyState _EnemyState;
+    public EnemyState _EnemyState;
     public EnemyLookDirection _LookDirection;
     PlayerControler _Player;
+    EnemyAttack _EnemyAttack;
 
     [Header("AgentMoveSpeeds")]
     [SerializeField] float _WanderSpeed;
@@ -57,14 +58,18 @@ public class EnemyBrain : MonoBehaviour
     private void OnEnable()
     {
         _Player = FindObjectOfType<PlayerControler>();
+        _EnemyAttack = FindObjectOfType<EnemyAttack>();
     }
     void Update()
     {
-        _Agent.SetDestination(_Target.position);
-        States();
-        PlayerDistanceChecker();
-        LineOfSight();
-        LookDirection();
+        if (!_EnemyAttack._IsAttacking)
+        {          
+            _Agent.SetDestination(_Target.position);
+            States();
+            PlayerDistanceChecker();
+            LineOfSight();
+            LookDirection();
+        }
     }
 
     void States()
@@ -121,6 +126,7 @@ public class EnemyBrain : MonoBehaviour
     void Attacking()
     {
         _Attack.Invoke();
+        _Agent.SetDestination(_Agent.transform.position);
     }
     void Fleeing()
     {

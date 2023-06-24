@@ -23,11 +23,11 @@ public class EnemyAttack : MonoBehaviour
 
     [SerializeField] float _CooldownTimer;
     [SerializeField] float _WindupTimer;
-    [SerializeField] float _AttackDurationTimer;  
+    [SerializeField] float _AttackDurationTimer;
 
     [SerializeField] Transform _AttackBox;
-    AttackVariants _AttackVariants;
-    bool _IsAttacking;
+    [SerializeField] AttackVariants _AttackVariants;
+   public bool _IsAttacking;
     [SerializeField] EnemyBrain _Brain;
 
     [SerializeField] SpriteRenderer _Sprite;
@@ -68,16 +68,16 @@ public class EnemyAttack : MonoBehaviour
             switch (_Brain._LookDirection)
             {
                 case EnemyLookDirection.Up:
-                    _AttackBox.rotation = new Quaternion(0, 180, 0, 0); 
+                    _AttackBox.localEulerAngles = new Vector3(0, 180, 0);
                     break;
                 case EnemyLookDirection.Down:
-                    _AttackBox.rotation = new Quaternion(0, 0, 0, 0);
+                    _AttackBox.localEulerAngles = new Vector3(0, 0, 0);
                     break;
                 case EnemyLookDirection.Left:
-                    _AttackBox.rotation = new Quaternion(0, -90, 0, 0);
+                    _AttackBox.localEulerAngles = new Vector3(0, 90, 0);
                     break;
                 case EnemyLookDirection.Right:
-                    _AttackBox.rotation = new Quaternion(0, 90, 0, 0);
+                    _AttackBox.localEulerAngles = new Vector3(0, -90, 0);
                     break;
                 default:
                     break;
@@ -93,19 +93,22 @@ public class EnemyAttack : MonoBehaviour
 
     void StationaryMelee()
     {
-        _Sprite.color = Color.green;
-        _Brain._Agent.speed = _MoveSpeed;
-        _WindupTimer = +Time.deltaTime;
+        _WindupTimer += Time.deltaTime;
+        _Sprite.color = Color.red;
+        _Brain._Agent.speed = 0;
         if (_WindupTimer > _WindupTime)
         {
-            _Sprite.color = Color.red;
-            _WindupTimer = 0;
-            if (_AttackDurationTimer > _AttackDuration)
+            _CooldownTimer += Time.deltaTime;
+            _Sprite.color = Color.green;
+            if(_CooldownTimer > _CooldownTime)
             {
-
+                _IsAttacking = false;
+                _Brain._EnemyState = EnemyState.Chasing;
+                _WindupTimer = 0;
+                _CooldownTimer = 0;
+                _Sprite.color = Color.white;
             }
         }
-
     }
 
     void Ranged()
