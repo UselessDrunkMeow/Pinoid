@@ -125,8 +125,7 @@ public class EnemyBrain : MonoBehaviour
     }
     void Attacking()
     {
-        _Attack.Invoke();
-        _Agent.SetDestination(_Agent.transform.position);
+        _Attack.Invoke();        
     }
     void Fleeing()
     {

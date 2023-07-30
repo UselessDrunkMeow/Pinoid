@@ -8,10 +8,11 @@ public class Health : MonoBehaviour
     public int _CurrentHealthPoints;
     Color _NewColor;
     Color _SpriteColor;
-    [SerializeField] SpriteRenderer _Sprite;
+    SpriteRenderer _Sprite;
     [SerializeField] float _ITime;
     float _Timer;
-    [SerializeField] bool _Invincible;
+    bool _Invincible = false;
+    bool _IsChangeColor = false;
 
     void Start()
     {
@@ -24,6 +25,16 @@ public class Health : MonoBehaviour
     void Update()
     {
         DebugStuff();
+        if (_Invincible)
+        {
+            IFrames();
+            _Timer += Time.deltaTime;
+        }
+        else
+        {
+            StopAllCoroutines();
+            _Sprite.color = _SpriteColor;
+        }
     }
 
     public void DecreaseHealth(int damage)
@@ -35,7 +46,9 @@ public class Health : MonoBehaviour
             _NewColor.g = 0;
             _NewColor.b = 0;
             _NewColor.a = 255;
-            IFrames();
+            _Invincible = true;
+            StopCoroutine(HealingColor());
+            StartCoroutine(DamageColor());
         }
     }
 
@@ -48,7 +61,7 @@ public class Health : MonoBehaviour
             _NewColor.g = 255;
             _NewColor.b = 0;
             _NewColor.a = 255;
-            IFrames();
+            StartCoroutine(HealingColor());
         }
     }
 
@@ -63,20 +76,45 @@ public class Health : MonoBehaviour
     {
         if (_Timer < _ITime)
         {
-            _Invincible = true;
-            ChangeColor();
+            if (!_IsChangeColor)
+                StartCoroutine(DamageColor());
         }
         else
-            StopCoroutine(ChangeColor());
+        {
+            StopCoroutine(DamageColor());
             _Invincible = false;
+            _IsChangeColor = false;
+            _Timer = 0;
+        }
     }
-    IEnumerator ChangeColor()
+    IEnumerator DamageColor()
     {
+        _IsChangeColor = true;
         _Sprite.color = _NewColor;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         _Sprite.color = _SpriteColor;
-        yield return new WaitForSeconds(0.05f);
-        ChangeColor();
-
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(DamageColor());
+    }
+    IEnumerator HealingColor()
+    {
+        print("Heal!");
+        _Sprite.color = _NewColor;
+        yield return new WaitForSeconds(0.1f);
+        print("Heal!");
+        _Sprite.color = _SpriteColor;
+        yield return new WaitForSeconds(0.1f);
+        print("Heal!");
+        _Sprite.color = _NewColor;
+        yield return new WaitForSeconds(0.1f);
+        print("Heal!");
+        _Sprite.color = _SpriteColor;
+        yield return new WaitForSeconds(0.1f);
+        print("Heal!");
+        _Sprite.color = _NewColor;
+        yield return new WaitForSeconds(0.1f);
+        print("Heal!");
+        _Sprite.color = _SpriteColor;
+        yield return new WaitForSeconds(0.1f);
     }
 }

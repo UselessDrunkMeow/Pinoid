@@ -13,35 +13,38 @@ public enum AttackVariants
 
 public class EnemyAttack : MonoBehaviour
 {
-    public float _Damage;
+    [Header("AttackSettings")]
+    public int _Damage;
     public float _Range;
     public float _MoveSpeed;
+    public float _KnockBack;
 
+    [Header("Timers")]
     public float _CooldownTime;
     public float _WindupTime;
     public float _AttackDuration;
+    public float _KnockBackDuration;
 
-    [SerializeField] float _CooldownTimer;
-    [SerializeField] float _WindupTimer;
-    [SerializeField] float _AttackDurationTimer;
+    float _CooldownTimer;
+    float _WindupTimer;
+    float _AttackDurationTimer;
 
+    [Header("General Data")]
     [SerializeField] Transform _AttackBox;
     [SerializeField] AttackVariants _AttackVariants;
-   public bool _IsAttacking;
+    public bool _IsAttacking;
     [SerializeField] EnemyBrain _Brain;
 
     [SerializeField] SpriteRenderer _Sprite;
 
-    // Start is called before the first frame update
     void Start()
     {
         _Brain = GetComponent<EnemyBrain>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (_IsAttacking)
+        if ( _IsAttacking || _AttackVariants == AttackVariants.Melee && _AttackVariants == AttackVariants.Ranged)
         {
             switch (_AttackVariants)
             {
@@ -88,7 +91,24 @@ public class EnemyAttack : MonoBehaviour
 
     void Melee()
     {
-
+        _WindupTimer += Time.deltaTime;
+        _Sprite.color = Color.red;
+        _Brain._Agent.speed = _MoveSpeed;
+        if (_WindupTimer > _WindupTime)
+        {
+            _CooldownTimer += Time.deltaTime;
+            _Sprite.color = Color.green;
+            _AttackBox.gameObject.SetActive(true);
+            if (_CooldownTimer > _CooldownTime)
+            {
+                _AttackBox.gameObject.SetActive(false);
+                _IsAttacking = false;
+                _Brain._EnemyState = EnemyState.Chasing;
+                _WindupTimer = 0;
+                _CooldownTimer = 0;
+                _Sprite.color = Color.white;
+            }
+        }
     }
 
     void StationaryMelee()
@@ -100,8 +120,10 @@ public class EnemyAttack : MonoBehaviour
         {
             _CooldownTimer += Time.deltaTime;
             _Sprite.color = Color.green;
-            if(_CooldownTimer > _CooldownTime)
+            _AttackBox.gameObject.SetActive(true);
+            if (_CooldownTimer > _CooldownTime)
             {
+                _AttackBox.gameObject.SetActive(false);
                 _IsAttacking = false;
                 _Brain._EnemyState = EnemyState.Chasing;
                 _WindupTimer = 0;
@@ -124,5 +146,29 @@ public class EnemyAttack : MonoBehaviour
     public void StartAttack()
     {
         _IsAttacking = true;
+        _Brain._Agent.speed = _MoveSpeed;
     }
+
+    IEnumerator KnockBack(Rigidbody prb)
+    {
+        Vector3 storedvelocity;//The velocity the player is moving at before the dash
+        storedvelocity = prb.velocity;//Stores the velocity the player is moving at
+        var direction = transform.position - prb.position;
+        prb.velocity = -direction.normalized * _KnockBack;
+        yield return new WaitForSeconds(_KnockBackDuration);
+        prb.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash          
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            var playerhp = other.GetComponent<Health>();
+            var playerrb = other.GetComponent<Rigidbody>();
+            StartCoroutine(KnockBack(playerrb));
+            playerhp.DecreaseHealth(_Damage);
+
+        }
+    }
+
 }
