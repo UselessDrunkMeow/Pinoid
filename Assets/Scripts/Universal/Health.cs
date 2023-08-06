@@ -151,8 +151,7 @@ public class Health : MonoBehaviour
         if (!_IsEnemy)
         {
             if (other.transform.CompareTag("PickUps"))
-            {
-                print("Aids!@");
+            {        
                 IncreaseHealth(1);
                 Destroy(other.transform.gameObject);
             }
