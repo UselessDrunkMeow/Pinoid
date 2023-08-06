@@ -85,7 +85,6 @@ public class EnemyAttack : MonoBehaviour
                 default:
                     break;
             }
-            _Sprite.color = Color.white;
         }
     }
 

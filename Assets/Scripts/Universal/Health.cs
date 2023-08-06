@@ -8,16 +8,19 @@ public class Health : MonoBehaviour
     public int _CurrentHealthPoints;
     Color _NewColor;
     Color _SpriteColor;
-    SpriteRenderer _Sprite;
+    [SerializeField] SpriteRenderer _Sprite;
     [SerializeField] float _ITime;
     float _Timer;
     bool _Invincible = false;
     bool _IsChangeColor = false;
+    [SerializeField] bool _IsEnemy = false;
+    Attack _PlayerAttack;
+    public GameObject[] _Loot;
 
     void Start()
     {
         _Sprite = GetComponentInChildren<SpriteRenderer>();
-
+        _PlayerAttack = FindObjectOfType<Attack>();
         _SpriteColor = _Sprite.color;
         _CurrentHealthPoints = _MaxHealthPoints;
     }
@@ -34,6 +37,10 @@ public class Health : MonoBehaviour
         {
             StopAllCoroutines();
             _Sprite.color = _SpriteColor;
+        }
+        if (/*_IsEnemy && */_CurrentHealthPoints <= 0)
+        {
+            Death();
         }
     }
 
@@ -81,10 +88,23 @@ public class Health : MonoBehaviour
         }
         else
         {
-            StopCoroutine(DamageColor());
-            _Invincible = false;
-            _IsChangeColor = false;
-            _Timer = 0;
+            if (!_IsEnemy)
+            {
+                StopCoroutine(DamageColor());
+                _Invincible = false;
+                _IsChangeColor = false;
+                _Timer = 0;
+            }
+            else
+            {
+                if (_PlayerAttack._IsAttacking == false)
+                {
+                    StopCoroutine(DamageColor());
+                    _Invincible = false;
+                    _IsChangeColor = false;
+                    _Timer = 0;
+                }
+            }
         }
     }
     IEnumerator DamageColor()
@@ -117,4 +137,36 @@ public class Health : MonoBehaviour
         _Sprite.color = _SpriteColor;
         yield return new WaitForSeconds(0.1f);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_IsEnemy)
+        {
+            if (other.transform.CompareTag("PlayerWeapon"))
+            {
+                print("Hit");
+                DecreaseHealth(FindObjectOfType<Attack>()._Damage);
+            }
+        }
+        if (!_IsEnemy)
+        {
+            if (other.transform.CompareTag("PickUps"))
+            {
+                print("Aids!@");
+                IncreaseHealth(1);
+                Destroy(other.transform.gameObject);
+            }
+        }
+    }
+    public void Death()
+    {
+        int i = Random.Range(0, 10);
+        if (i == 5)
+        {
+            int y = Random.Range(0, 10);
+            Instantiate(_Loot[0], transform.position, transform.rotation);
+        }
+        Destroy(this.gameObject);
+    }
+
 }

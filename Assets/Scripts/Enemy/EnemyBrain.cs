@@ -58,7 +58,7 @@ public class EnemyBrain : MonoBehaviour
     private void OnEnable()
     {
         _Player = FindObjectOfType<PlayerControler>();
-        _EnemyAttack = FindObjectOfType<EnemyAttack>();
+        _EnemyAttack = GetComponent<EnemyAttack>();
     }
     void Update()
     {

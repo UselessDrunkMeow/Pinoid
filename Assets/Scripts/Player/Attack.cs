@@ -4,10 +4,12 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     PlayerControler _PlayerControler;
+    AttackDamage _AttackDamage;
     Vector3 _AttackRotation;
     [Header("General Attack Settings")]
     public float _AttackDuration;
     public float _AttackCooldown;
+    public int _Damage;
 
     [Header("Rotation Settings")]
     public float _NewRotation;
@@ -17,7 +19,6 @@ public class Attack : MonoBehaviour
     [Header("Rotation Settings")]
     public float _ForwardMoveAmount;
     public float _ForwardMSpeed;
-
 
     //public float _SideMoveAmount;
     //public float _SideMoveSpeed; 
@@ -35,8 +36,6 @@ public class Attack : MonoBehaviour
 
     [NonReorderable]
     Vector3 _NewRot;
-    Quaternion _NewRot2;
-    Vector3 _CurRot;
 
     [SerializeField] Transform WeaponRotatePoint;
     [SerializeField] GameObject WeaponHolder;
@@ -44,6 +43,7 @@ public class Attack : MonoBehaviour
 
     void Start()
     {
+        _AttackDamage = FindObjectOfType<AttackDamage>();
         _IsAttacking = false;
         _CanAttack = true;
         _PlayerControler = GetComponent<PlayerControler>();
@@ -52,6 +52,7 @@ public class Attack : MonoBehaviour
 
     void FixedUpdate()
     {
+        _AttackDamage._Damage = _Damage;
         if (_CanAttack)
         {
             AttackDirections();
@@ -161,6 +162,5 @@ public class Attack : MonoBehaviour
     void SideMovement()
     {
 
-    }
-  
+    }     
 }
