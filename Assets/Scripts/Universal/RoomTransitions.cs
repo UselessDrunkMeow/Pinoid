@@ -16,7 +16,7 @@ public class RoomTransitions : MonoBehaviour
     
     void Update()
     {
-        
+      
     }
 
     IEnumerator WaitForAllRoomsToExsist()
@@ -28,9 +28,9 @@ public class RoomTransitions : MonoBehaviour
     void CheckAttatchedDoor()
     {
         RaycastHit hit;
-        Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 30, layerMask);
+        Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 999999999999, layerMask); //That many nines is not excessive I promise ~LMC.
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.magenta);
-        _AttachedDoor = hit.transform.gameObject.GetComponent<RoomTransitions>();
+        _AttachedDoor = hit.transform.gameObject.GetComponent<RoomTransitions>(); 
         print(hit.transform.position);                
     }
 
