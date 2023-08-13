@@ -12,18 +12,28 @@ public enum LookDirectionEnum
     idle
 }
 
+public enum MoveDirectionEnum
+{
+    up,
+    down,
+    left,
+    right,
+    idle
+}
+
 public class PlayerControler : MonoBehaviour
 {
-    [SerializeField] LookDirectionEnum _LookDirection;
+    public LookDirectionEnum _LookDirection;
+    public MoveDirectionEnum _MoveDirection;
     [SerializeField] Rigidbody _RB;
 
     [Header("MovementSettings")]
     [SerializeField] float _Speed;
     Vector3 _Movement;
+    Vector3 _Look;
 
     [Header("AttackSettings")]
     [SerializeField] float _AttackSpeed;
-    Vector3 _AttackRotation;
     bool _IsAttacking;
 
     [Header("DashSettings")]
@@ -36,31 +46,25 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] Transform _PlayerSprite;
     float _Timer;
 
+    [Header("Refrenceses")]
+    Attack _Attack;
+
+    private void Start()
+    {
+        _Attack = GetComponent<Attack>();
+    }
+
     void Update()
     {
         if (!_IsAttacking)
         {
-            StartCoroutine(Dash());
-            StartCoroutine(Atack());
+            StartCoroutine(Dash());        
         }
-        Movement();
         WalkAnimations();
-        LookDirection();
-        AttackDirections();
-    }
-
-    void Movement()
-    {
-        _Movement.x = Input.GetAxisRaw("Horizontal");
-        _Movement.z = Input.GetAxisRaw("Vertical");
-    }
-
-    IEnumerator Atack()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        MoveDirection();
+        if (!_Attack._IsAttacking)
         {
-            StartCoroutine(AttackAnimations());
-            yield return new WaitForSeconds(_AttackSpeed);
+            LookDirection();
         }
     }
 
@@ -77,11 +81,12 @@ public class PlayerControler : MonoBehaviour
             _IsDashing = false;
         }
     }
+    //dont look at this, its shit, but it kinda works? i really need to learn how the unity animator works
     void WalkAnimations()
     {
-        switch (_LookDirection)
+        switch (_MoveDirection)
         {
-            case LookDirectionEnum.up:
+            case MoveDirectionEnum.up:
                 _Animator.speed = 1;
                 _Animator.SetBool("Up", true);
                 _Animator.SetBool("Down", false);
@@ -90,7 +95,7 @@ public class PlayerControler : MonoBehaviour
                 _Timer = 0;
                 break;
 
-            case LookDirectionEnum.down:
+            case MoveDirectionEnum.down:
                 _Animator.speed = 1;
                 _Animator.SetBool("Down", true);
                 _Animator.SetBool("Right", false);
@@ -99,7 +104,7 @@ public class PlayerControler : MonoBehaviour
                 _Timer = 0;
                 break;
 
-            case LookDirectionEnum.right:
+            case MoveDirectionEnum.right:
                 _PlayerSprite.localEulerAngles = new Vector3(0, 0, 0);
                 _Animator.speed = 1;
                 _Animator.SetBool("Right", true);
@@ -109,7 +114,7 @@ public class PlayerControler : MonoBehaviour
                 _Timer = 0;
                 break;
 
-            case LookDirectionEnum.left:
+            case MoveDirectionEnum.left:
                 _PlayerSprite.localEulerAngles = new Vector3(0, 180, 0);
                 _Animator.speed = 1;
                 _Animator.SetBool("Right", true);
@@ -119,7 +124,7 @@ public class PlayerControler : MonoBehaviour
                 _Timer = 0;
                 break;
 
-            case LookDirectionEnum.idle:
+            case MoveDirectionEnum.idle:
                 float switchToIdleTime = 0.25f;
                 _Timer += Time.deltaTime;
                 if (_Timer > switchToIdleTime)
@@ -133,33 +138,66 @@ public class PlayerControler : MonoBehaviour
                 break;
 
         }
-    }//dont look at this, its shit, but it kinda works?
-
-    IEnumerator AttackAnimations()
-    {
-        _Animator.speed = _AttackSpeed;
-        _IsAttacking = true;
-        _Animator.SetBool("Attack", true);
-        yield return new WaitForSeconds(_AttackSpeed);
-        _Animator.SetBool("Attack", false);
-        _IsAttacking = false;
     }
 
-    void LookDirection()
+    //not used for now, might need it later, so il keep it
+
+    //IEnumerator AttackAnimations()
+    //{
+    //    _Animator.speed = _AttackSpeed;
+    //    _IsAttacking = true;
+    //    _Animator.SetBool("Attack", true);
+    //    yield return new WaitForSeconds(_AttackSpeed);
+    //    _Animator.SetBool("Attack", false);
+    //    _IsAttacking = false;
+    //}
+
+    //checks input to see to what direction the player has to move, also changes the movedirection enum to the correct enum
+    void MoveDirection()
     {
+        _Movement.x = Input.GetAxisRaw("Horizontal");
+        _Movement.z = Input.GetAxisRaw("Vertical");
         if (_Movement.z > 0)
         {
-            _LookDirection = LookDirectionEnum.up;
+            _MoveDirection = MoveDirectionEnum.up;
         }
         else if (_Movement.z < 0)
         {
-            _LookDirection = LookDirectionEnum.down;
+            _MoveDirection = MoveDirectionEnum.down;
         }
         else if (_Movement.x < 0)
         {
-            _LookDirection = LookDirectionEnum.left;
+            _MoveDirection = MoveDirectionEnum.left;
         }
         else if (_Movement.x > 0)
+        {
+            _MoveDirection = MoveDirectionEnum.right;
+        }
+        else
+        {
+            _MoveDirection = MoveDirectionEnum.idle;
+        }
+
+    }
+
+    //checks input to see to what direction the player has to look, also changes the lookirection enum to the correct enum
+    void LookDirection()
+    {
+        _Look.x = Input.GetAxisRaw("HorizontalArrow");
+        _Look.z = Input.GetAxisRaw("VerticalArrow");
+        if (_Look.z > 0)
+        {
+            _LookDirection = LookDirectionEnum.up;
+        }
+        else if (_Look.z < 0)
+        {
+            _LookDirection = LookDirectionEnum.down;
+        }
+        else if (_Look.x < 0)
+        {
+            _LookDirection = LookDirectionEnum.left;
+        }
+        else if (_Look.x > 0)
         {
             _LookDirection = LookDirectionEnum.right;
         }
@@ -167,36 +205,9 @@ public class PlayerControler : MonoBehaviour
         {
             _LookDirection = LookDirectionEnum.idle;
         }
-
-    }
-    void AttackDirections()
-    {
-        switch (_LookDirection)
-        {
-            case LookDirectionEnum.up:
-                _AttackRotation = new Vector3(0, 0, 90);
-                break;
-            case LookDirectionEnum.down:
-                _AttackRotation = new Vector3(0, 0, -90);
-                break;
-            case LookDirectionEnum.left:
-                _AttackRotation = new Vector3(-90, -0, 0);
-                break;
-            case LookDirectionEnum.right:
-                _AttackRotation = new Vector3(90, 0, 0);
-                break;
-            case LookDirectionEnum.idle:
-                _AttackRotation = new Vector3(0, 0, -90);
-                break;
-        }
     }
 
-    private void OnDrawGizmos()//gizmos
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(transform.position, _AttackRotation);
-        print("WaAaAaAaAaA");
-    }
+    //fixed update for moving
     private void FixedUpdate()
     {
         _RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);
