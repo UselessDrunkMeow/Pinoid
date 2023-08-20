@@ -72,7 +72,7 @@ public class Attack : MonoBehaviour
         }
 
         _NewPos.z = -_ForwardMoveAmount;
-        WeaponRotatePoint.eulerAngles = _AttackRotation;
+        WeaponRotatePoint.eulerAngles = new Vector3(0, _AttackRotation.y+180, 0);
     }
 
     void AttackDirections()
@@ -80,25 +80,29 @@ public class Attack : MonoBehaviour
         switch (_PlayerControler._LookDirection)
         {
             case LookDirectionEnum.up:
-                _AttackRotation = new Vector3(0, 180, 0);
+                _AttackRotation = new Vector3(0, 180, 0);             
 
                 StartSwing();
                 break;
+
             case LookDirectionEnum.down:
-                _AttackRotation = new Vector3(0, 0, 0);
+                _AttackRotation = new Vector3(0, 0, 0);              
 
                 StartSwing();
                 break;
+
             case LookDirectionEnum.left:
-                _AttackRotation = new Vector3(0, 90, 0);
+                _AttackRotation = new Vector3(0, 90, 0);                
 
                 StartSwing();
                 break;
+
             case LookDirectionEnum.right:
                 _AttackRotation = new Vector3(0, 270, 0);
 
                 StartSwing();
                 break;
+
             case LookDirectionEnum.idle:
                 _AttackRotation = new Vector3(0, 0, 0);
                 break;

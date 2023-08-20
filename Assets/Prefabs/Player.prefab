@@ -75,9 +75,11 @@ GameObject:
   m_Component:
   - component: {fileID: 991624811}
   - component: {fileID: 991624812}
+  - component: {fileID: 388901856}
+  - component: {fileID: 388901855}
   m_Layer: 0
   m_Name: simpel sword1
-  m_TagString: Untagged
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +151,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &388901856
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991624810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.116872996, y: 0.31558084, z: 0.009843063}
+  m_Center: {x: 0.0055365628, y: 0.057634894, z: 0.000004139034}
+--- !u!114 &388901855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991624810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7869cac63dac10d4a8092011605ddf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Damage: 0
 --- !u!1 &1088086454
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _AttackDuration: 0.5
   _AttackCooldown: 1
+  _Damage: 1
   _NewRotation: 35
   _RotationSpeed: 3
   _ForwardMoveAmount: 1
@@ -361,9 +390,8 @@ MonoBehaviour:
   _CurrentHealthPoints: 0
   _Sprite: {fileID: 0}
   _ITime: 1
-  _Timer: 0
-  _Invincible: 0
-  _IsChangeColor: 0
+  _IsEnemy: 0
+  _Loot: []
 --- !u!1 &4026368582480685993
 GameObject:
   m_ObjectHideFlags: 0
