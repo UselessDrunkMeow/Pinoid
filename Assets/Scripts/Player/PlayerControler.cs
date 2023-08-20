@@ -75,7 +75,7 @@ public class PlayerControler : MonoBehaviour
         {
             _IsDashing = true;
             storedvelocity = _RB.velocity;//Stores the velocity the player is moving at
-            _RB.velocity = _Movement.normalized * _Dashspeed;
+            _RB.velocity = _Movement.normalized * -_Dashspeed;
             yield return new WaitForSeconds(_DashDuration);
             _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
             _IsDashing = false;

@@ -72,7 +72,7 @@ public class Attack : MonoBehaviour
         }
 
         _NewPos.z = -_ForwardMoveAmount;
-        WeaponRotatePoint.eulerAngles = new Vector3(0, _AttackRotation.y+180, 0);
+        WeaponRotatePoint.eulerAngles = new Vector3(0, _AttackRotation.y+180, 0);//DO NOT REMOVE THE +180. IT IS IMPORTANT.
     }
 
     void AttackDirections()
