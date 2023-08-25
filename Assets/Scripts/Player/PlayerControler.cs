@@ -155,8 +155,7 @@ public class PlayerControler : MonoBehaviour
     //checks input to see to what direction the player has to move, also changes the movedirection enum to the correct enum
     void MoveDirection()
     {
-        _Movement.x = Input.GetAxisRaw("Horizontal");
-        _Movement.z = Input.GetAxisRaw("Vertical");
+        _Movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         if (_Movement.z > 0)
         {
             _MoveDirection = MoveDirectionEnum.up;
@@ -210,6 +209,13 @@ public class PlayerControler : MonoBehaviour
     //fixed update for moving
     private void FixedUpdate()
     {
-        _RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);
+        MoveCharacter(_Movement);
+        //_RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);    
+    }
+
+    void MoveCharacter(Vector3 _Movement)
+    {
+        Vector3 movement = transform.position + transform.TransformDirection(_Movement.normalized);
+        _RB.velocity = -_Movement * _Speed * Time.fixedDeltaTime;
     }
 }
