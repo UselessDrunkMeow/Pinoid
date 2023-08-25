@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8924218205512787991}
   - component: {fileID: 3460831383184074941}
   - component: {fileID: 799630070999365446}
+  - component: {fileID: 1534602304214306150}
   m_Layer: 0
   m_Name: BrokenWallD_P
   m_TagString: Untagged
@@ -60,8 +61,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.756712, y: 2.015833, z: 0.89507324}
-  m_Center: {x: -2.7705393, y: 0.6443007, z: 0.041992337}
+  m_Size: {x: 5.804349, y: 1.3986735, z: 0.89507324}
+  m_Center: {x: -2.7943513, y: 0.3357209, z: 0.04199198}
 --- !u!65 &3460831383184074941
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -88,6 +89,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 11.453873, y: 0.738971, z: 0.937044}
   m_Center: {x: -5.005211, y: 0.005869627, z: 0.010504425}
+--- !u!65 &1534602304214306150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394692644938344691}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5093038, y: 0.7559061, z: 0.89507324}
+  m_Center: {x: -2.855535, y: 1.3486763, z: 0.04198788}
 --- !u!1001 &5802213351696616
 PrefabInstance:
   m_ObjectHideFlags: 0
