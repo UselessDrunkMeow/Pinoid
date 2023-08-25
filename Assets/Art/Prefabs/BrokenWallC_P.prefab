@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1974241242346282687}
   - component: {fileID: 6100399450985647743}
   - component: {fileID: 279930173125474791}
+  - component: {fileID: 4292166439693372005}
   m_Layer: 0
   m_Name: BrokenWallC_P
   m_TagString: Untagged
@@ -67,8 +68,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.438711, y: 0.75543165, z: 0.89781576}
-  m_Center: {x: -0.9588318, y: -1.4593248, z: 0.2632279}
+  m_Size: {x: 5.829287, y: 0.72737944, z: 0.9605248}
+  m_Center: {x: -0.1128242, y: 0.5859739, z: 0.21881676}
 --- !u!65 &6100399450985647743
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93,8 +94,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7.1278143, y: 1.4678133, z: 0.8377862}
-  m_Center: {x: -0.15843773, y: 0.1984371, z: 0.2799616}
+  m_Size: {x: 7.1278143, y: 0.7384803, z: 0.8943758}
+  m_Center: {x: -0.15843773, y: -0.16622937, z: 0.25166678}
+--- !u!65 &4292166439693372005
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067240286651131110}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 11.438711, y: 0.75543165, z: 0.89781576}
+  m_Center: {x: -0.9588318, y: -1.4593248, z: 0.2632279}
 --- !u!1001 &471388090434444611
 PrefabInstance:
   m_ObjectHideFlags: 0
