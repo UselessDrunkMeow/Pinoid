@@ -216,6 +216,6 @@ public class PlayerControler : MonoBehaviour
     void MoveCharacter(Vector3 _Movement)
     {
         Vector3 movement = transform.position + transform.TransformDirection(_Movement.normalized);
-        _RB.velocity = -_Movement * _Speed * Time.fixedDeltaTime;
+        _RB.velocity = -_Movement * _Speed *100* Time.fixedDeltaTime;
     }
 }
