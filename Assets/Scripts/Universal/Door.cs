@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomTransitions : MonoBehaviour
+public class Door : MonoBehaviour
 {
-    public RoomTransitions _AttachedDoor;
+    public Door _AttachedDoor;
     PlayerControler _Player;
     public Transform _PlayerTeleportPoint;
     public LayerMask layerMask;
-    public bool _CanExit;
+    public bool _CanExit = true;
     void Start()
     {
         _Player = FindObjectOfType<PlayerControler>();
@@ -25,7 +25,7 @@ public class RoomTransitions : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 999999999999, layerMask); //That many nines is not excessive I promise ~LMC.
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.magenta);
-        _AttachedDoor = hit.transform.gameObject.GetComponent<RoomTransitions>();
+        _AttachedDoor = hit.transform.gameObject.GetComponent<Door>();
         print(hit.transform.position);
     }
 
