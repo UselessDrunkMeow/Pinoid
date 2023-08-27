@@ -400,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 107760452436421723, guid: b326771f9f03a8e4dbcfe5392bfed960, type: 3}
       propertyPath: m_Name
-      value: RoomManager (1)
+      value: RoomManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b326771f9f03a8e4dbcfe5392bfed960, type: 3}
