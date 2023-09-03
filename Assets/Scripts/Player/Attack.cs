@@ -134,7 +134,7 @@ public class Attack : MonoBehaviour
         else if (returnToStartPos)
         {
             WeaponHolder.transform.localPosition = Vector3.MoveTowards(WeaponHolder.transform.localPosition, _OldPos, _ForwardMSpeed * Time.deltaTime);
-            if (_ForwardTime >= _AttackDuration / 2 + _AttackCooldown)
+            if (_ForwardTime >= _AttackDuration / 2 + _AttackCooldown * Time.deltaTime)
             {
                 returnToStartPos = false;
                 _ForwardTime = 0;
