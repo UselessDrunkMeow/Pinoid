@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Tim Test Scene.unity
-    guid: dc4debe4015de3748b6bbefc51ea66f2
-  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 555fb44c9f702034f9cc8c5568e48edf
+  - enabled: 1
+    path: Assets/Scenes/ForestLevel.unity
+    guid: 3b959b4196490f04282c81b51394d0d5
+  - enabled: 0
+    path: Assets/Scenes/Tim Test Scene.unity
+    guid: dc4debe4015de3748b6bbefc51ea66f2
   m_configObjects: {}

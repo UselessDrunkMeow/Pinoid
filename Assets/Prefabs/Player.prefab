@@ -270,12 +270,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4026368582025450753}
-  - component: {fileID: 4026368582025450752}
   - component: {fileID: 4026368582025450780}
   - component: {fileID: 4026368582025450781}
   - component: {fileID: 1891147845}
   - component: {fileID: 1891147839}
-  - component: {fileID: 453514509913335936}
+  - component: {fileID: 1891147842}
+  - component: {fileID: 1891147843}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -300,19 +300,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4026368582025450752
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4026368582025450754}
-  m_Material: {fileID: 13400000, guid: 0642e7e50a45dd14ca96f1c7055c399c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.54258955, y: 0.70728064, z: 0.5255928}
-  m_Center: {x: -0.0028987527, y: -0.14635968, z: -0.0018855929}
 --- !u!54 &4026368582025450780
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -344,7 +331,7 @@ MonoBehaviour:
   _LookDirection: 0
   _MoveDirection: 0
   _RB: {fileID: 4026368582025450780}
-  _Speed: 3
+  _Speed: 1
   _AttackSpeed: 1
   _Dashspeed: 12.5
   _DashDuration: 0.15
@@ -393,8 +380,8 @@ MonoBehaviour:
   _ITime: 1
   _IsEnemy: 0
   _Loot: []
---- !u!65 &453514509913335936
-BoxCollider:
+--- !u!136 &1891147842
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -403,9 +390,24 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.9062257, z: 0.82234573}
-  m_Center: {x: 4.677655e-16, y: 0.66115594, z: -0.009869754}
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: -0.008821368, y: 0.666636, z: -2.2939007e-16}
+--- !u!136 &1891147843
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4026368582025450754}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 0.99417925
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.0029103756, z: 0}
 --- !u!1 &4026368582480685993
 GameObject:
   m_ObjectHideFlags: 0

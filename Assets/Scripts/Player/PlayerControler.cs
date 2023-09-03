@@ -39,6 +39,7 @@ public class PlayerControler : MonoBehaviour
     [Header("DashSettings")]
     [SerializeField] float _Dashspeed;
     [SerializeField] float _DashDuration;
+    [SerializeField] float _DashCooldown;
     bool _IsDashing;
 
     [Header("Animator")]
@@ -58,7 +59,7 @@ public class PlayerControler : MonoBehaviour
     {
         if (!_IsAttacking)
         {
-            StartCoroutine(Dash());        
+            StartCoroutine(Dash());
         }
         WalkAnimations();
         MoveDirection();
@@ -71,13 +72,21 @@ public class PlayerControler : MonoBehaviour
     IEnumerator Dash()
     {
         Vector3 storedvelocity;//The velocity the player is moving at before the dash
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (!_IsDashing)
         {
-            _IsDashing = true;
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                _IsDashing = true;
+            }
+        }
+        if (_IsDashing)
+        {
+            print("WawsawWAwawaWWA");
             storedvelocity = _RB.velocity;//Stores the velocity the player is moving at
-            _RB.velocity = _Movement.normalized * -_Dashspeed;
+            _RB.AddForce(_Movement.normalized * -_Dashspeed * 100);
             yield return new WaitForSeconds(_DashDuration);
             _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
+            yield return new WaitForSeconds(_DashCooldown);
             _IsDashing = false;
         }
     }
@@ -216,6 +225,6 @@ public class PlayerControler : MonoBehaviour
     void MoveCharacter(Vector3 _Movement)
     {
         Vector3 movement = transform.position + transform.TransformDirection(_Movement.normalized);
-        _RB.velocity = -_Movement * _Speed *100* Time.fixedDeltaTime;
+        _RB.velocity = -_Movement * _Speed * 100 * Time.fixedDeltaTime;
     }
 }

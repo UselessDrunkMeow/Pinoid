@@ -207,11 +207,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!1 &988017099 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4026368582025450754, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
-  m_PrefabInstance: {fileID: 4026368583391226159}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1263393714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -682,40 +677,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1891147839, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
   m_PrefabInstance: {fileID: 4026368583391226159}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988017099}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44380cf1c7d145d49ab74237096497af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &1891147842
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988017099}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: -0.008821368, y: 0.666636, z: -2.2939007e-16}
---- !u!136 &1891147843
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988017099}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 0.99417925
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.0029103756, z: 0}
 --- !u!1001 &4026368583391226159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -771,17 +738,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 4026368582025450780, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
-      propertyPath: m_Constraints
-      value: 116
+    - target: {fileID: 4026368582025450781, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
+      propertyPath: _Dashspeed
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 4026368582025450781, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
-      propertyPath: _Speed
-      value: 3
+      propertyPath: _DashCooldown
+      value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4026368582025450752, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
-    - {fileID: 453514509913335936, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
+    - target: {fileID: 4026368582025450781, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
+      propertyPath: _DashDuration
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd3ff9a209b78b7449a47790faf1ab61, type: 3}
 --- !u!1001 &5791970423863969501
 PrefabInstance:
