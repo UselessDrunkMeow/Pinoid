@@ -40,9 +40,11 @@ public class Attack : MonoBehaviour
     [SerializeField] Transform WeaponRotatePoint;
     [SerializeField] GameObject WeaponHolder;
 
+    bool _Stop;
+
 
     void Start()
-    {
+    {      
         _AttackDamage = FindObjectOfType<AttackDamage>();
         _IsAttacking = false;
         _CanAttack = true;
@@ -70,29 +72,43 @@ public class Attack : MonoBehaviour
             _SwingTime = 0;
             _ForwardTime = 0;
         }
+        if (_ForwardTime >= _AttackDuration / 2 + _AttackCooldown)
+        {
+            _Stop = true;
+            returnToStartPos = false;
+            _ForwardTime = 0;
+            _CanAttack = true;
+            _IsAttacking = false;
+            StartCoroutine(Stop());
+        }
 
         _NewPos.z = -_ForwardMoveAmount;
-        WeaponRotatePoint.eulerAngles = new Vector3(0, _AttackRotation.y+180, 0);//DO NOT REMOVE THE +180. IT IS IMPORTANT.
+        WeaponRotatePoint.eulerAngles = new Vector3(0, _AttackRotation.y + 180, 0);//DO NOT REMOVE THE +180. IT IS IMPORTANT.
     }
 
+    IEnumerator Stop()
+    {
+        yield return new WaitForSeconds(0.01f);
+        _Stop = false;
+    }
     void AttackDirections()
     {
         switch (_PlayerControler._LookDirection)
         {
             case LookDirectionEnum.up:
-                _AttackRotation = new Vector3(0, 180, 0);             
+                _AttackRotation = new Vector3(0, 180, 0);
 
                 StartSwing();
                 break;
 
             case LookDirectionEnum.down:
-                _AttackRotation = new Vector3(0, 0, 0);              
+                _AttackRotation = new Vector3(0, 0, 0);
 
                 StartSwing();
                 break;
 
             case LookDirectionEnum.left:
-                _AttackRotation = new Vector3(0, 90, 0);                
+                _AttackRotation = new Vector3(0, 90, 0);
 
                 StartSwing();
                 break;
@@ -119,27 +135,30 @@ public class Attack : MonoBehaviour
 
     void ForwardMovement()
     {
-        if (!returnToStartPos)
+        if (!_Stop)
         {
-            _IsAttacking = true;
-            _CanAttack = false;
-            WeaponHolder.transform.localPosition = Vector3.MoveTowards(WeaponHolder.transform.localPosition, _NewPos, _ForwardMSpeed * Time.deltaTime);
-            if (_ForwardTime >= _AttackDuration / 2)
+            if (!returnToStartPos)
             {
-                _ForwardTime = 0;
-                returnToStartPos = true;
+                _IsAttacking = true;
+                _CanAttack = false;
+                WeaponHolder.transform.localPosition = Vector3.MoveTowards(WeaponHolder.transform.localPosition, _NewPos, _ForwardMSpeed * Time.deltaTime);
+                if (_ForwardTime >= _AttackDuration / 2)
+                {
+                    _ForwardTime = 0;
+                    returnToStartPos = true;
+                }
             }
-        }
 
-        else if (returnToStartPos)
-        {
-            WeaponHolder.transform.localPosition = Vector3.MoveTowards(WeaponHolder.transform.localPosition, _OldPos, _ForwardMSpeed * Time.deltaTime);
-            if (_ForwardTime >= _AttackDuration / 2 + _AttackCooldown * Time.deltaTime)
+            else if (returnToStartPos)
             {
-                returnToStartPos = false;
-                _ForwardTime = 0;
-                _CanAttack = true;
-                _IsAttacking = false;
+                WeaponHolder.transform.localPosition = Vector3.MoveTowards(WeaponHolder.transform.localPosition, _OldPos, _ForwardMSpeed * Time.deltaTime);
+                if (_ForwardTime >= _AttackDuration / 2 + _AttackCooldown)
+                {
+                    returnToStartPos = false;
+                    _ForwardTime = 0;
+                    _CanAttack = true;
+                    _IsAttacking = false;
+                }
             }
         }
     }
@@ -166,5 +185,5 @@ public class Attack : MonoBehaviour
     void SideMovement()
     {
 
-    }     
+    }
 }

@@ -41,6 +41,7 @@ public class PlayerControler : MonoBehaviour
     [SerializeField] float _DashDuration;
     [SerializeField] float _DashCooldown;
     bool _IsDashing;
+    bool _CanDash = true;
 
     [Header("Animator")]
     [SerializeField] Animator _Animator;
@@ -72,10 +73,11 @@ public class PlayerControler : MonoBehaviour
     IEnumerator Dash()
     {
         Vector3 storedvelocity;//The velocity the player is moving at before the dash
-        if (!_IsDashing)
+        if (_CanDash)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
+                _CanDash = false;
                 _IsDashing = true;
             }
         }
@@ -86,8 +88,9 @@ public class PlayerControler : MonoBehaviour
             _RB.AddForce(_Movement.normalized * -_Dashspeed * 100);
             yield return new WaitForSeconds(_DashDuration);
             _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
-            yield return new WaitForSeconds(_DashCooldown);
             _IsDashing = false;
+            yield return new WaitForSeconds(_DashCooldown);
+            _CanDash = true;
         }
     }
     //dont look at this, its shit, but it kinda works? i really need to learn how the unity animator works
