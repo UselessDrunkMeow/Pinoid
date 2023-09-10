@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
         Playing,
         Paused,
         Dead,
+        End,
         Crashed
     }
 

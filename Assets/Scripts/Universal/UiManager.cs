@@ -8,11 +8,13 @@ public class UiManager : MonoBehaviour
     {
         None,
         Pause,
-        GameOver
+        GameOver,
+        End,
     }
 
     public GameObject _PauseScreen;
     public GameObject _GameOverScreen;
+    public GameObject _EndScreen;
 
     Screen _screen;
 
@@ -36,6 +38,10 @@ public class UiManager : MonoBehaviour
         {
             _screen = Screen.None;
         }
+        if (GameManager.Instance._GameState == GameManager.GameState.End)
+        {
+            _screen = Screen.End;
+        }
 
         switch (_screen)
         {
@@ -50,6 +56,11 @@ public class UiManager : MonoBehaviour
             case Screen.GameOver:
                 _PauseScreen.SetActive(false);
                 _GameOverScreen.SetActive(true);
+                break;
+            case Screen.End:
+                _PauseScreen.SetActive(false);
+                _GameOverScreen.SetActive(false);
+                _EndScreen.SetActive(true);
                 break;
             default:
                 break;
