@@ -5192,7 +5192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44380cf1c7d145d49ab74237096497af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _MaxHealthPoints: 3
+  _MaxHealthPoints: 5
   _CurrentHealthPoints: 0
   _Sprite: {fileID: 0}
   _ITime: 1

@@ -91,8 +91,9 @@ public class PlayerControler : MonoBehaviour
             yield return new WaitForSeconds(_DashDuration);
             _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
             _IsDashing = false;
-            yield return new WaitForSeconds(_DashCooldown);
+            yield return new WaitForSeconds(_DashCooldown-0.5f);
             _DashParticle.Play();
+            yield return new WaitForSeconds(0.5f);
             _CanDash = true;
         }
     }
