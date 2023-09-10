@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.ParticleSystemJobs;
 
 public enum LookDirectionEnum
 {
@@ -37,6 +38,7 @@ public class PlayerControler : MonoBehaviour
     bool _IsAttacking;
 
     [Header("DashSettings")]
+    [SerializeField] ParticleSystem _DashParticle;
     [SerializeField] float _Dashspeed;
     [SerializeField] float _DashDuration;
     [SerializeField] float _DashCooldown;
@@ -56,8 +58,9 @@ public class PlayerControler : MonoBehaviour
         _Attack = GetComponent<Attack>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        MoveCharacter(_Movement);
         if (!_IsAttacking)
         {
             StartCoroutine(Dash());
@@ -82,14 +85,14 @@ public class PlayerControler : MonoBehaviour
             }
         }
         if (_IsDashing)
-        {
-            print("WawsawWAwawaWWA");
+        {      
             storedvelocity = _RB.velocity;//Stores the velocity the player is moving at
             _RB.AddForce(_Movement.normalized * -_Dashspeed * 100);
             yield return new WaitForSeconds(_DashDuration);
             _RB.velocity = storedvelocity;//Returns the velocity the player is moving at before the dash
             _IsDashing = false;
             yield return new WaitForSeconds(_DashCooldown);
+            _DashParticle.Play();
             _CanDash = true;
         }
     }
@@ -218,12 +221,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    //fixed update for moving
-    private void FixedUpdate()
-    {
-        MoveCharacter(_Movement);
-        //_RB.MovePosition(transform.position + transform.TransformDirection(_Movement.normalized) * Time.fixedDeltaTime * _Speed);    
-    }
+   
 
     void MoveCharacter(Vector3 _Movement)
     {
