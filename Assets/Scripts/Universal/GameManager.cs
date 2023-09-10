@@ -71,4 +71,10 @@ public class GameManager : MonoBehaviour
             _GameState = GameState.Dead;
         }
     }
+
+    public void Unpause()
+    {
+        Time.timeScale = 1;
+        _GameState = GameState.Playing;
+    }
 }

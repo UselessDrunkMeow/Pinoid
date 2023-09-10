@@ -14,7 +14,7 @@ public class Attack : MonoBehaviour
     [Header("Rotation Settings")]
     public float _NewRotation;
     public float _RotationSpeed;
-    bool _Flip;
+    public bool _Flip;
 
     [Header("Rotation Settings")]
     public float _ForwardMoveAmount;
@@ -41,7 +41,6 @@ public class Attack : MonoBehaviour
     [SerializeField] GameObject WeaponHolder;
 
     bool _Stop;
-
 
     void Start()
     {      
@@ -158,6 +157,7 @@ public class Attack : MonoBehaviour
                     _ForwardTime = 0;
                     _CanAttack = true;
                     _IsAttacking = false;
+                 
                 }
             }
         }
@@ -175,7 +175,7 @@ public class Attack : MonoBehaviour
             _NewRot.y -= _RotationSpeed;
         }
 
-        if (_SwingTime >= _AttackDuration + _AttackCooldown)
+        if (_SwingTime >= _AttackDuration + _AttackCooldown-0.05f)
         {
             _Flip = !_Flip;
             _SwingTime = 0;
